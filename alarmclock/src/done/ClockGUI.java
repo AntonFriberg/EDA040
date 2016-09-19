@@ -292,7 +292,6 @@ public class ClockGUI extends Applet implements KeyListener, ClockTimeDisplay, I
 			// Control software already running, activate GUI updates:
 			hiding = false;
 		} else {
-			System.out.println("AlarmClock start...");
 			control.start();
 		}
 	}

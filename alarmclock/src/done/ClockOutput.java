@@ -35,7 +35,7 @@ public class ClockOutput {
      * @param msg The string to display.
      */
     public void console(String msg) {
-    	System.out.println(msg);
+    	//System.out.println(msg);
     }
     
     /**

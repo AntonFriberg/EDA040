@@ -11,7 +11,6 @@ public class ClockData {
 
     private int t = 0;          //clock time
     private int alarmTime   = 0;
-    private boolean alarmFlag;
     private int buttonState;
     private ClockOutput output;
     private ClockInput input;
@@ -46,13 +45,13 @@ public class ClockData {
         output.showTime(t);             // display time
 
         if (input.getAlarmFlag() && alarmTime == t) {
-            alarmFlag = true;
             doAlarmCount = 20;          // beep for 20 seconds
         }
         if (doAlarmCount > 0) {
             output.doAlarm();           // sound the alarm
             doAlarmCount -= 1;          // decrease beep count
-            if (doAlarmCount == 0) alarmFlag = false;
+            if (doAlarmCount == 0) {
+			}
         }
         sem.give();
     }
@@ -61,9 +60,7 @@ public class ClockData {
         sem.take();
 
         if (input.getChoice() != buttonState) { // user pressed button
-            // buttonState = input.getChoice(); WHY NOT HERE?
-            alarmFlag = false;          // stop alarm beep if active
-            doAlarmCount = 0;
+        	doAlarmCount = 0;
             if (buttonState == ClockInput.SET_ALARM){
                 alarmTime = input.getValue();
             } else if (buttonState == ClockInput.SET_TIME) {
