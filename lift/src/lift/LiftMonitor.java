@@ -1,9 +1,10 @@
 package lift;
 
 /**
- * Created by Anton Friberg on 02/10/16.
+ * Created by Anton Friberg and Joakim Magnusson on 02/10/16.
+ * The data structures for the simulated lift with synchronized control.
  */
-public class LiftMonitor {
+class LiftMonitor {
     private LiftView lv;
     private int here;
     private int next;
@@ -13,14 +14,14 @@ public class LiftMonitor {
     private int maxLoad = 4;
     private boolean headingUp;
 
-    public LiftMonitor(LiftView lv) {
+    LiftMonitor(LiftView lv) {
         this.lv = lv;
         waitEntry = new int[7];
         waitExit  = new int[7];
         headingUp = true;
     }
 
-    public synchronized int[] move() {
+    synchronized int[] move() {
         here = next;     // move lift to next floor
         notifyAll();
 
@@ -37,7 +38,7 @@ public class LiftMonitor {
         return new int[]{here, next};
     }
 
-    public synchronized void ride(int start, int destination) {
+    synchronized void ride(int start, int destination) {
         waitEntry[start]++;         // add person to wait at start floor
         lv.drawLevel(start, waitEntry[start]);
         notifyAll();

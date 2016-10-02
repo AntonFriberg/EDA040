@@ -1,16 +1,15 @@
 package lift;
 
-import javafx.util.Pair;
-
 /**
  * Created by Anton Friberg and Joakim Magnusson on 02/10/16.
+ * Thread simulating a moving lift.
  */
-public class LiftThread implements Runnable{
+class LiftThread implements Runnable{
 
     private LiftMonitor lm;
     private LiftView lv;
 
-    public LiftThread(LiftMonitor lm, LiftView lv) {
+    LiftThread(LiftMonitor lm, LiftView lv) {
         this.lm = lm;
         this.lv = lv;
     }

@@ -3,6 +3,7 @@ package lift;
 
 /**
  * Created by Anton Friberg and Joakim Magnusson on 02/10/16.
+ * Main class for the lift simulation.
  */
 public class LiftMain {
     public static void main(String[] args) {

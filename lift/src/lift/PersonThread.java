@@ -1,13 +1,14 @@
 package lift;
 
 /**
- * Created by Anton Friberg on 02/10/16.
+ * Created by Anton Friberg and Joakim Magnusson on 02/10/16.
+ * Thread simulating a person taking the lift.
  */
-public class PersonThread implements Runnable{
+class PersonThread implements Runnable{
 
     private LiftMonitor lm;
 
-    public PersonThread(LiftMonitor lm) {
+    PersonThread(LiftMonitor lm) {
         this.lm = lm;
     }
 
