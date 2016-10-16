@@ -20,10 +20,11 @@ import done.AbstractWashingMachine;
  * </UL>
  */
 class WashingProgram2 extends WashingProgram {
-	int preWashTime = 15*60*1000;
-	int washTime = 30*60*1000;
-	int rinseTime = 2*60*1000;
-	int centTime = 5*60*1000;
+    private double speed;
+	private static int PRE_WASH_TIME = 15*60*1000; // in seconds
+	private static int WASH_TIME = 30*60*1000; // in seconds
+	private static int RINSE_TIME = 2*60*1000; // in seconds
+	private static int CENT_TIME = 5*60*1000; // in seconds
 
 	// ------------------------------------------------------------- CONSTRUCTOR
 
@@ -34,12 +35,13 @@ class WashingProgram2 extends WashingProgram {
 	 * @param   waterController  The WaterController to use
 	 * @param   spinController   The SpinController to use
 	 */
-	public WashingProgram2(AbstractWashingMachine mach,
+	WashingProgram2(AbstractWashingMachine mach,
                            double speed,
                            TemperatureController tempController,
                            WaterController waterController,
                            SpinController spinController) {
 		super(mach, speed, tempController, waterController, spinController);
+        this.speed = speed;
 	}
 
 	// ---------------------------------------------------------- PUBLIC METHODS
@@ -59,21 +61,23 @@ class WashingProgram2 extends WashingProgram {
 				0.5));
 		mailbox.doFetch(); // Wait for Ack
 
+		// Switch on spin
+		mySpinController.putEvent(new SpinEvent(this,
+				SpinEvent.SPIN_SLOW));
+
 		// Heat water to 40C
 		myTempController.putEvent(new TemperatureEvent(this,
 				TemperatureEvent.TEMP_SET,
 				40));
+        mailbox.doFetch(); // Wait for Ack
 
-		// Switch on spin
-		mySpinController.putEvent(new SpinEvent(this,
-				SpinEvent.SPIN_SLOW));
-		Thread.sleep(preWashTime);
+		Thread.sleep((long) (PRE_WASH_TIME / speed));
 
         // Heat water to 90C
         myTempController.putEvent(new TemperatureEvent(this,
                 TemperatureEvent.TEMP_SET,
                 90));
-        Thread.sleep(washTime);
+        Thread.sleep((long) (WASH_TIME / speed));
 
 		// Turn off heat
 		myTempController.putEvent(new TemperatureEvent(this,
@@ -93,7 +97,7 @@ class WashingProgram2 extends WashingProgram {
 					WaterEvent.WATER_FILL,
 					0.5));
 			mailbox.doFetch(); // Wait for Ack
-			Thread.sleep(rinseTime);
+			Thread.sleep((long) (RINSE_TIME / speed));
 		}
 
 		// Drain
@@ -105,7 +109,7 @@ class WashingProgram2 extends WashingProgram {
 		// Centrifuge
 		mySpinController.putEvent(new SpinEvent(this,
 				SpinEvent.SPIN_FAST));
-		Thread.sleep(centTime);
+		Thread.sleep((long) (CENT_TIME / speed));
 
 		// Switch off spin
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));

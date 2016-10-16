@@ -30,7 +30,7 @@ class WashingProgram3 extends WashingProgram {
 	 * @param   waterController  The WaterController to use
 	 * @param   spinController   The SpinController to use
 	 */
-	public WashingProgram3(AbstractWashingMachine mach,
+	WashingProgram3(AbstractWashingMachine mach,
 			double speed,
 			TemperatureController tempController,
 			WaterController waterController,
@@ -46,7 +46,7 @@ class WashingProgram3 extends WashingProgram {
 	 */
 	protected void wash() throws InterruptedException {
 
-		// Switch of temp regulation
+		// Switch of targetTemperature regulation
 		myTempController.putEvent(new TemperatureEvent(this,
 				TemperatureEvent.TEMP_IDLE,
 				0.0));
