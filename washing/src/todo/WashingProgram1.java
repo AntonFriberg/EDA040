@@ -107,6 +107,11 @@ class WashingProgram1 extends WashingProgram {
 		mySpinController.putEvent(new SpinEvent(this,
                 SpinEvent.SPIN_OFF));
 
+		// Set water regulation to idle => drain pump stops
+		myWaterController.putEvent(new WaterEvent(this,
+				WaterEvent.WATER_IDLE,
+				0.0));
+
 		// Unlock
 		myMachine.setLock(false);
 	}

@@ -13,6 +13,7 @@ class SpinController extends PeriodicThread {
     private int direction = AbstractWashingMachine.SPIN_LEFT;
     private long timestamp;
 	private static int ROTATION_PERIOD = 60; // in seconds
+    private static int counter = 0; // count the passed seconds
 
 	SpinController(AbstractWashingMachine mach, double speed) {
 		super((long) (1000/speed));
@@ -45,7 +46,6 @@ class SpinController extends PeriodicThread {
         }
         /* Change direction of slow spin every period time */
         if (mode == SpinEvent.SPIN_SLOW && periodCheck()) {
-            timestamp = System.currentTimeMillis();
             direction = (direction % 2) + 1;
             mach.setSpin(direction);
         }
@@ -54,7 +54,7 @@ class SpinController extends PeriodicThread {
 	}
     /* Check if a period passed */
     private boolean periodCheck() {
-        long currentTime = System.currentTimeMillis();
-        return currentTime >= (timestamp + (ROTATION_PERIOD * 1000)) / speed;
+        counter = (counter >= 60) ? 0: counter+1;
+        return  (counter == 0);
     }
 }

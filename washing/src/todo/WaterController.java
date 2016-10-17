@@ -33,7 +33,6 @@ class WaterController extends PeriodicThread {
                 case WaterEvent.WATER_IDLE:
                     mach.setFill(false);
                     mach.setDrain(false);
-                    //sender.putEvent(new AckEvent(this));
                     break;
 
                 //Fill

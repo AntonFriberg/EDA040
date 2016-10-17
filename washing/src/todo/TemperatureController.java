@@ -23,7 +23,7 @@ class TemperatureController extends PeriodicThread {
     private long timestamp;
 
 	TemperatureController(AbstractWashingMachine mach, double speed) {
-		super((long) (1000/speed)); //
+		super((long) (10000/speed)); //
 		this.mach = mach;
 		this.speed = speed;
 	}
